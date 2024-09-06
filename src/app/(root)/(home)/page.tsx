@@ -6,7 +6,7 @@ export default function page() {
       <h1 className="h1-bold">
         jhksdjhk dhsjbdnmsa djhbgdas mdajhgsdas mdajhb
       </h1>
-      <UserButton />
+      <UserButton afterSignOutUrl="/" />
     </div>
   )
 }
