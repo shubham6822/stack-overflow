@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (
-        <main className=" bg-light-850 dark:bg-dark-100 relative">
+        <main className="background-light850_dark100 relative">
             <Navbar />
             <div className="flex">
                 leftsidebar
