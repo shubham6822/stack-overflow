@@ -12,10 +12,12 @@ interface ThemeContextType {
 export default function ThemeProvider({ children }: { children: ReactNode }) {
     const [mode, setmode] = useState("")
     const handleThemeChange = () => {
-        if (mode === "dark") {
+        if (localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
             setmode("dark")
+            document.documentElement.classList.add("dark")
         } else {
             setmode("light")
+            document.documentElement.classList.remove("dark")
         }
     }
 

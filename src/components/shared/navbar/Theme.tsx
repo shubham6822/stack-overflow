@@ -5,10 +5,10 @@ import {
     MenubarContent,
     MenubarItem,
     MenubarMenu,
-    MenubarSeparator,
     MenubarTrigger,
 } from "@/components/ui/menubar"
 import Image from "next/image";
+import { themes } from "@/constant";
 
 export default function Theme() {
     const { mode, setmode } = useTheme()
@@ -36,11 +36,29 @@ export default function Theme() {
                         }
                     </MenubarTrigger>
                     <MenubarContent className="absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 dark: border-dark-100 dark: bg-dark-300">
-                        <MenubarItem>Dark</MenubarItem>
-                        <MenubarSeparator />
-                        <MenubarItem>Light</MenubarItem>
-                        <MenubarSeparator />
-                        <MenubarItem>System</MenubarItem>
+                        {themes.map((theme, index) => (
+                            <MenubarItem
+                                key={index}
+                                onClick={() => {
+                                    setmode(theme.value)
+                                    if (theme.value !== "system") {
+                                        localStorage.setItem("theme", theme.value)
+                                    } else {
+                                        localStorage.removeItem("theme")
+                                    }
+                                }}
+                                className="dark: focus:bg-dark-300  flex items-center gap-4 px-2.5 py-2"
+                            >
+                                <Image
+                                    src={theme.icon}
+                                    alt={theme.value}
+                                    width={16}
+                                    height={16}
+                                    className={`${mode === theme.value && 'active-theme'}`}
+                                />
+                                <p className={`body-semibold text-light-500 ${mode === theme.value ? 'text-primary-500' : 'text-dark100_light900'}`}>{theme.label}</p>
+                            </MenubarItem>
+                        ))}
                     </MenubarContent>
                 </MenubarMenu>
             </Menubar>
