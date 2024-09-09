@@ -16,7 +16,6 @@ export default function Layout({ children }: { children: ReactNode }) {
                 </section>
                 <RightSidebar />
             </div>
-            toaster
         </main>
     )
 }
