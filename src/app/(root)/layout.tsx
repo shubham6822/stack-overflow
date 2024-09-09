@@ -1,5 +1,6 @@
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import Navbar from "@/components/shared/navbar/Navbar";
+import RightSidebar from "@/components/shared/RightSidebar";
 import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -13,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                         {children}
                     </div>
                 </section>
-                rightsidebar
+                <RightSidebar />
             </div>
             toaster
         </main>
