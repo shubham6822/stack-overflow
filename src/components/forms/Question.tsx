@@ -30,8 +30,7 @@ interface Props {
 const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     const editorRef = useRef(null);
     const { mode } = useTheme();
-    // const editorRef = useRef(null);
-    // const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     // const router = useRouter();
     // const pathname = usePathname();
 
@@ -164,12 +163,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                                             'codesample | bold italic forecolor | alignleft aligncenter |' +
                                             'alignright alignjustify | bullist numlist',
                                         content_style: 'body { font-family:Inter; font-size:16px }',
-                                        // skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
-                                        // content_css: mode === 'dark' ? 'dark' : 'light',
-                                        mode: 'dark',
-
                                     }}
-
                                 />
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
@@ -220,8 +214,17 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="primary-gradient w-fit !text-light-900" >
-                    Submit
+                <Button type="submit" className="primary-gradient w-fit !text-light-900" disabled={isSubmitting} >
+                    {isSubmitting ? (
+                        <>
+                            {type === 'edit' ? 'Updating...' : 'Posting...'}
+                        </>
+                    ) : (
+                        <>
+                            {type === 'edit' ? 'Edit Question ' : 'Ask a Question '}
+                        </>
+                    )
+                    }
                 </Button>
             </form>
         </Form>
