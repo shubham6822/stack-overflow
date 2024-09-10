@@ -19,6 +19,7 @@ import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeProvider';
+import BundledEditor from '../BundledEditor';
 
 interface Props {
     type?: string;
@@ -27,7 +28,8 @@ interface Props {
 }
 
 const Question = ({ type, mongoUserId, questionDetails }: Props) => {
-    // const { mode } = useTheme();
+    const editorRef = useRef(null);
+    const { mode } = useTheme();
     // const editorRef = useRef(null);
     // const [isSubmitting, setIsSubmitting] = useState(false);
     // const router = useRouter();
@@ -81,35 +83,35 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     }
 
     const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, field: any) => {
-        // if (e.key === 'Enter' && field.name === 'tags') {
-        //     e.preventDefault();
+        if (e.key === 'Enter' && field.name === 'tags') {
+            e.preventDefault();
 
-        //     const tagInput = e.target as HTMLInputElement;
-        //     const tagValue = tagInput.value.trim();
+            const tagInput = e.target as HTMLInputElement;
+            const tagValue = tagInput.value.trim();
 
-        //     if (tagValue !== '') {
-        //         if (tagValue.length > 15) {
-        //             return form.setError('tags', {
-        //                 type: 'required',
-        //                 message: 'Tag must be less than 15 characters.'
-        //             })
-        //         }
+            if (tagValue !== '') {
+                if (tagValue.length > 15) {
+                    return form.setError('tags', {
+                        type: 'required',
+                        message: 'Tag must be less than 15 characters.'
+                    })
+                }
 
-        //         if (!field.value.includes(tagValue as never)) {
-        //             form.setValue('tags', [...field.value, tagValue]);
-        //             tagInput.value = ''
-        //             form.clearErrors('tags');
-        //         }
-        //     } else {
-        //         form.trigger();
-        //     }
-        // }
+                if (!field.value.includes(tagValue as never)) {
+                    form.setValue('tags', [...field.value, tagValue]);
+                    tagInput.value = ''
+                    form.clearErrors('tags');
+                }
+            } else {
+                form.trigger();
+            }
+        }
     }
 
     const handleTagRemove = (tag: string, field: any) => {
-        // const newTags = field.value.filter((t: string) => t !== tag);
+        const newTags = field.value.filter((t: string) => t !== tag);
 
-        // form.setValue('tags', newTags);
+        form.setValue('tags', newTags);
     }
 
     return (
@@ -140,15 +142,15 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                         <FormItem className="flex w-full flex-col gap-3">
                             <FormLabel className="paragraph-semibold text-dark400_light800">Detailed explanation of your problem <span className="text-primary-500">*</span></FormLabel>
                             <FormControl className="mt-3.5">
-                                {/* <Editor
+                                <BundledEditor
                                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
+                                    // @ts-ignore
                                     onInit={(evt, editor) => {
-                                        // @ts-ignore
                                         editorRef.current = editor
                                     }}
                                     onBlur={field.onBlur}
                                     onEditorChange={(content) => field.onChange(content)}
-                                    initialValue={parsedQuestionDetails?.content || ''}
+                                    initialValue={''}
                                     init={{
                                         height: 350,
                                         menubar: false,
@@ -165,7 +167,8 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                                         skin: mode === 'dark' ? 'oxide-dark' : 'oxide',
                                         content_css: mode === 'dark' ? 'dark' : 'light',
                                     }}
-                                /> */}
+
+                                />
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
                                 Introduce the problem and expand on what you put in the title. Minimum 20 characters.
