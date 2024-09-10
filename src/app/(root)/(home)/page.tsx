@@ -16,9 +16,9 @@ export default function page() {
       author: {
         _id: '1',
         name: 'John Doe',
-        picture: 'john-doe.jpg',
+        picture: '/assets/images/default-logo.svg',
       },
-      upvotes: 1500000,
+      upvotes: ["1500000"],
       views: 500552,
       answers: [],
       createdAt: new Date('2023-09-01T12:00:00.000Z'),
@@ -30,9 +30,9 @@ export default function page() {
       author: {
         _id: '2',
         name: 'Jane Smith',
-        picture: 'jane-smith.jpg',
+        picture: '/assets/images/default-logo.svg',
       },
-      upvotes: 5,
+      upvotes: ["5"],
       views: 50,
       answers: [],
       createdAt: new Date('2021-09-02T10:30:00.000Z'),
