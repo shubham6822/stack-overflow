@@ -5,39 +5,12 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/seach/LocalSearch";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constant/filter";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 
-export default function page() {
-  const questions = [
-    {
-      _id: '1',
-      title: 'Cascading Deletes in SQLAlchemy?',
-      tags: [{ _id: '1', name: 'python' }, { _id: '2', name: 'sql' }],
-      author: {
-        _id: '1',
-        name: 'John Doe',
-        picture: '/assets/images/default-logo.svg',
-      },
-      upvotes: ["1500000"],
-      views: 500552,
-      answers: [],
-      createdAt: new Date('2023-09-01T12:00:00.000Z'),
-    },
-    {
-      _id: '2',
-      title: 'How to center a div?',
-      tags: [{ _id: '3', name: 'css' }, { _id: '4', name: 'html' }],
-      author: {
-        _id: '2',
-        name: 'Jane Smith',
-        picture: '/assets/images/default-logo.svg',
-      },
-      upvotes: ["5"],
-      views: 50,
-      answers: [],
-      createdAt: new Date('2021-09-02T10:30:00.000Z'),
-    },
-  ];
+export default async function page() {
+  const questions = await getQuestions({});
+
   return (
     <div>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">

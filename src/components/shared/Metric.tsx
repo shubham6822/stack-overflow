@@ -23,13 +23,13 @@ const Metric = ({
 }: MetricProps) => {
     const metricContent = (
         <>
-            <Image
+            {/* <Image
                 src={imgUrl}
                 width={16}
                 height={16}
                 alt={alt}
                 className={`object-contain ${href ? 'rounded-full' : ''}`}
-            />
+            /> */}
 
             <p className={`${textStyles} flex items-center gap-1`}>
                 {value}

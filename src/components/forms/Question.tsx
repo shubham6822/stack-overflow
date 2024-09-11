@@ -33,7 +33,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     const { mode } = useTheme();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
-    // const pathname = usePathname();
+    const pathname = usePathname();
 
     // const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || '');
 
@@ -68,7 +68,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
             content: values.explanation,
             tags: values.tags,
             author: mongoUserId,
-            // path: pathname,
+            path: pathname,
         });
 
         router.push('/');
