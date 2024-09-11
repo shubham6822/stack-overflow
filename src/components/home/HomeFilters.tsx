@@ -2,16 +2,16 @@
 
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { useRouter, useSearchParams } from 'next/navigation'
+// import { useRouter, useSearchParams } from 'next/navigation'
 import { HomePageFilters } from '@/constant/filter'
 
 const HomeFilters = () => {
-    const searchParams = useSearchParams();
-    const router = useRouter();
+    // const searchParams = useSearchParams();
+    // const router = useRouter();
 
-    const [active, setActive] = useState('');
+    const [active] = useState('');
 
-    const handleTypeClick = (item: string) => {
+    const handleTypeClick = () => {
         // if (active === item) {
         //     setActive("");
 
@@ -43,7 +43,7 @@ const HomeFilters = () => {
                         ? 'dark:hover:bg-dark-400 bg-primary-100 text-primary-500 hover:bg-primary-100 dark:bg-dark-400 dark:text-primary-500'
                         : 'bg-light-800 text-light-500 hover:bg-light-800 dark:bg-dark-300 dark:text-light-500 dark:hover:bg-dark-300'
                         }`}
-                    onClickCapture={() => handleTypeClick(item.value)}
+                    onClickCapture={() => handleTypeClick()}
                 >
                     {item.name}
                 </Button>

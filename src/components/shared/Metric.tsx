@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
@@ -13,8 +13,8 @@ interface MetricProps {
 }
 
 const Metric = ({
-    imgUrl,
-    alt,
+    // imgUrl,
+    // alt,
     value,
     title,
     href,

@@ -50,7 +50,7 @@ import 'tinymce/plugins/emoticons/js/emojis';
 import 'tinymce/skins/content/default/content';
 import 'tinymce/skins/ui/oxide/content';
 
-export default function BundledEditor(props) {
+export default function BundledEditor(props: any) {
     return (
         <Editor
             licenseKey='your-license-key'

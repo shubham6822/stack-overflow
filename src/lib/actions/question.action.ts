@@ -5,9 +5,9 @@ import { connectToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
-import { CreateQuestionParams, GetQuestionsParams } from "./shared.types";
+import { CreateQuestionParams } from "./shared.types";
 
-export async function getQuestions(params: GetQuestionsParams) {
+export async function getQuestions() {
     try {
         connectToDatabase();
         const questions = await Question.find({})

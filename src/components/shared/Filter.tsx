@@ -8,7 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
     filters: {
@@ -21,11 +21,11 @@ interface Props {
 
 const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
     const searchParams = useSearchParams();
-    const router = useRouter();
+    // const router = useRouter();
 
     const paramFilter = searchParams.get('filter');
 
-    const handleUpdateParams = (value: string) => {
+    const handleUpdateParams = () => {
         // const newUrl = formUrlQuery({
         //     params: searchParams.toString(),
         //     key: 'filter',

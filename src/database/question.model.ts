@@ -1,5 +1,6 @@
 import { model, models, Schema } from "mongoose";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface IQuestion extends Document {
     title: string;
     content: string;

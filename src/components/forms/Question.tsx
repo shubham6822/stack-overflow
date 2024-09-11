@@ -18,7 +18,7 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Badge } from '../ui/badge';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
-import { useTheme } from '@/context/ThemeProvider';
+// import { useTheme } from '@/context/ThemeProvider';
 import BundledEditor from '../BundledEditor';
 import { createQuestion } from '@/lib/actions/question.action';
 
@@ -28,9 +28,9 @@ interface Props {
     questionDetails?: string;
 }
 
-const Question = ({ type, mongoUserId, questionDetails }: Props) => {
+const Question = ({ type, mongoUserId }: Props) => {
     const editorRef = useRef(null);
-    const { mode } = useTheme();
+    // const { mode } = useTheme();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -143,12 +143,11 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
                             <FormControl className="mt-3.5">
                                 <BundledEditor
                                     apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                                    // @ts-ignore
-                                    onInit={(evt, editor) => {
+                                    onInit={(evt: any, editor: any) => {
                                         editorRef.current = editor
                                     }}
                                     onBlur={field.onBlur}
-                                    onEditorChange={(content) => field.onChange(content)}
+                                    onEditorChange={(content: any) => field.onChange(content)}
                                     initialValue={''}
                                     init={{
                                         height: 350,
