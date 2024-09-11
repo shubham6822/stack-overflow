@@ -1,4 +1,4 @@
-// import Image from 'next/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
@@ -13,8 +13,8 @@ interface MetricProps {
 }
 
 const Metric = ({
-    // imgUrl,
-    // alt,
+    imgUrl,
+    alt,
     value,
     title,
     href,
@@ -23,13 +23,13 @@ const Metric = ({
 }: MetricProps) => {
     const metricContent = (
         <>
-            {/* <Image
+            <Image
                 src={imgUrl}
                 width={16}
                 height={16}
                 alt={alt}
                 className={`object-contain ${href ? 'rounded-full' : ''}`}
-            /> */}
+            />
 
             <p className={`${textStyles} flex items-center gap-1`}>
                 {value}

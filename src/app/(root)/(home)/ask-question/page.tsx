@@ -1,11 +1,10 @@
 import Question from "@/components/forms/Question";
 import { getUserById } from "@/lib/actions/user.action";
-// import { auth } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-    // const { userId } = auth();
-    const userId = "64f1a8c9b3245e00123e4567"
+    const { userId } = auth();
     if (!userId) redirect("/sign-in");
 
     const mongouser = await getUserById({ userId });
