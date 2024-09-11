@@ -32,7 +32,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     const editorRef = useRef(null);
     const { mode } = useTheme();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    // const router = useRouter();
+    const router = useRouter();
     // const pathname = usePathname();
 
     // const parsedQuestionDetails = questionDetails && JSON.parse(questionDetails || '');
@@ -52,7 +52,6 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
         setIsSubmitting(true);
-        await createQuestion({})
         // try {
         //     if (type === 'Edit') {
         //         await editQuestion({
@@ -64,15 +63,15 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
 
         //         router.push(`/question/${parsedQuestionDetails._id}`);
         //     } else {
-        //         await createQuestion({
-        //             title: values.title,
-        //             content: values.explanation,
-        //             tags: values.tags,
-        //             author: JSON.parse(mongoUserId),
-        //             path: pathname,
-        //         });
+        await createQuestion({
+            title: values.title,
+            content: values.explanation,
+            tags: values.tags,
+            author: mongoUserId,
+            // path: pathname,
+        });
 
-        //         router.push('/');
+        router.push('/');
         //     }
 
         // } catch (error) {
