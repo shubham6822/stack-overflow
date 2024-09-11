@@ -20,6 +20,7 @@ import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 import { useTheme } from '@/context/ThemeProvider';
 import BundledEditor from '../BundledEditor';
+import { createQuestion } from '@/lib/actions/question.action';
 
 interface Props {
     type?: string;
@@ -50,8 +51,8 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
 
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
-        // setIsSubmitting(true);
-
+        setIsSubmitting(true);
+        await createQuestion({})
         // try {
         //     if (type === 'Edit') {
         //         await editQuestion({
