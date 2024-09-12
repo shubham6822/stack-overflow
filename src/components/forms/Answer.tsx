@@ -9,8 +9,8 @@ import { Editor } from '@tinymce/tinymce-react'
 import { useRef, useState } from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
-// import { createAnswer } from '@/lib/actions/answer.action'
 import { usePathname } from 'next/navigation'
+import { createAnswer } from '@/lib/actions/answer.action'
 
 interface Props {
     question: string;
@@ -33,26 +33,26 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
         setIsSubmitting(true);
 
-        // try {
-        //     await createAnswer({
-        //         content: values.answer,
-        //         author: JSON.parse(authorId),
-        //         question: JSON.parse(questionId),
-        //         path: pathname,
-        //     });
+        try {
+            await createAnswer({
+                content: values.answer,
+                author: JSON.parse(authorId),
+                question: JSON.parse(questionId),
+                path: pathname,
+            });
 
-        //     form.reset();
+            form.reset();
 
-        //     if (editorRef.current) {
-        //         const editor = editorRef.current as any;
+            if (editorRef.current) {
+                const editor = editorRef.current as any;
 
-        //         editor.setContent('');
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // } finally {
-        //     setIsSubmitting(false)
-        // }
+                editor.setContent('');
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsSubmitting(false)
+        }
     }
 
     const generateAIAnswer = async () => {

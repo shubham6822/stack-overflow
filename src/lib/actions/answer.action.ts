@@ -5,7 +5,7 @@ import { connectToDatabase } from "../mongoose";
 import { AnswerVoteParams, CreateAnswerParams, DeleteAnswerParams, GetAnswersParams } from "./shared.types";
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
-import Interaction from "@/database/interaction.model";
+// import Interaction from "@/database/interaction.model";
 import User from "@/database/user.model";
 
 export async function createAnswer(params: CreateAnswerParams) {
@@ -182,7 +182,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
 
         await answer.deleteOne({ _id: answerId });
         await Question.updateMany({ _id: answer.question }, { $pull: { answers: answerId } });
-        await Interaction.deleteMany({ answer: answerId });
+        // await Interaction.deleteMany({ answer: answerId });
 
         revalidatePath(path);
     } catch (error) {
