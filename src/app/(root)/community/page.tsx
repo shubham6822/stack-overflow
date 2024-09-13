@@ -1,5 +1,5 @@
 import Filter from '@/components/shared/Filter'
-// import Pagination from '@/components/shared/Pagination'
+import Pagination from '@/components/shared/Pagination'
 import { getAllUsers } from '@/lib/actions/user.action'
 import Link from 'next/link'
 import type { Metadata } from 'next';
@@ -9,11 +9,15 @@ import LocalSearchbar from '@/components/shared/seach/LocalSearch';
 import { UserFilters } from '@/constant/filter';
 
 export const metadata: Metadata = {
-    title: 'Community | Dev Overflow',
+    title: 'Community | Stack Overflow',
 }
 
 const Page = async ({ searchParams }: SearchParamsProps) => {
-    const result = await getAllUsers()
+    const result = await getAllUsers({
+        searchQuery: searchParams.q,
+        filter: searchParams.filter,
+        page: searchParams.page ? +searchParams.page : 1,
+    })
     const UserCard = dynamic(() => import('@/components/cards/UserCard'), { ssr: false })
     return (
         <>
@@ -49,12 +53,12 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
                 )}
             </section>
 
-            {/* <div className="mt-10">
+            <div className="mt-10">
                 <Pagination
                     pageNumber={searchParams?.page ? +searchParams.page : 1}
                     isNext={result.isNext}
                 />
-            </div> */}
+            </div>
         </>
     )
 }

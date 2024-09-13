@@ -88,50 +88,49 @@ export async function deleteUser(params: DeleteUserParams) {
     }
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(params: GetAllUsersParams) {
     try {
         connectToDatabase();
 
-        // const { searchQuery, filter, page = 1, pageSize = 10 } = params;
-        // const skipAmount = (page - 1) * pageSize;
+        const { searchQuery, filter, page = 1, pageSize = 10 } = params;
+        const skipAmount = (page - 1) * pageSize;
 
         const query: FilterQuery<typeof User> = {};
 
-        // if (searchQuery) {
-        //     const escapedSearchQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-        //     query.$or = [
-        //         { name: { $regex: new RegExp(escapedSearchQuery, 'i') } },
-        //         { username: { $regex: new RegExp(escapedSearchQuery, 'i') } },
-        //     ]
-        // }
+        if (searchQuery) {
+            const escapedSearchQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            query.$or = [
+                { name: { $regex: new RegExp(escapedSearchQuery, 'i') } },
+                { username: { $regex: new RegExp(escapedSearchQuery, 'i') } },
+            ]
+        }
 
-        // let sortOptions = {};
+        let sortOptions = {};
 
-        // switch (filter) {
-        //     case "new_users":
-        //         sortOptions = { joinedAt: -1 }
-        //         break;
-        //     case "old_users":
-        //         sortOptions = { joinedAt: 1 }
-        //         break;
-        //     case "top_contributors":
-        //         sortOptions = { reputation: -1 }
-        //         break;
+        switch (filter) {
+            case "new_users":
+                sortOptions = { joinedAt: -1 }
+                break;
+            case "old_users":
+                sortOptions = { joinedAt: 1 }
+                break;
+            case "top_contributors":
+                sortOptions = { reputation: -1 }
+                break;
 
-        //     default:
-        //         break;
-        // }
+            default:
+                break;
+        }
 
         const users = await User.find(query)
-        // .sort(sortOptions)
-        // .skip(skipAmount)
-        // .limit(pageSize)
+            .sort(sortOptions)
+            .skip(skipAmount)
+            .limit(pageSize)
 
         const totalUsers = await User.countDocuments(query);
-        // const isNext = totalUsers > skipAmount + users.length;
-        console.log("users", users);
+        const isNext = totalUsers > skipAmount + users.length;
 
-        return { users }
+        return { users, isNext };
     } catch (error) {
         console.log(error);
         throw error;
