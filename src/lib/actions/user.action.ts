@@ -95,7 +95,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
         const { searchQuery, filter, page = 1, pageSize = 10 } = params;
         const skipAmount = (page - 1) * pageSize;
 
-        const query: FilterQuery<typeof User> = {};
+        const query: FilterQuery<any> = {};
 
         if (searchQuery) {
             const escapedSearchQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
@@ -180,7 +180,7 @@ export async function getSavedQuestions(params: GetSavedQuestionsParams) {
 
         const skipAmount = (page - 1) * pageSize;
 
-        const query: FilterQuery<typeof Question> = searchQuery
+        const query: FilterQuery<any> = searchQuery
             ? { title: { $regex: new RegExp(searchQuery, 'i') } }
             : {};
 
@@ -293,7 +293,7 @@ export async function getUserInfo(params: GetUserByIdParams) {
             }
         ])
 
-        const criteria = [
+        const criteria: any = [
             { type: 'QUESTION_COUNT' as BadgeCriteriaType, count: totalQuestions },
             { type: 'ANSWER_COUNT' as BadgeCriteriaType, count: totalAnswers },
             { type: 'QUESTION_UPVOTES' as BadgeCriteriaType, count: questionUpvotes?.totalUpvotes || 0 },

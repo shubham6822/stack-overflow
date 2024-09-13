@@ -5,12 +5,12 @@ import { useForm } from 'react-hook-form'
 import { AnswerSchema } from '@/lib/validations'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Editor } from '@tinymce/tinymce-react'
 import { useRef, useState } from 'react'
 import { Button } from '../ui/button'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { createAnswer } from '@/lib/actions/answer.action'
+import BundledEditor from '../BundledEditor'
 
 interface Props {
     question: string;
@@ -123,14 +123,13 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                         render={({ field }) => (
                             <FormItem className="flex w-full flex-col gap-3">
                                 <FormControl className="mt-3.5">
-                                    <Editor
+                                    <BundledEditor
                                         apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
-                                        onInit={(evt, editor) => {
-                                            // @ts-ignore
+                                        onInit={(evt: any, editor: any) => {
                                             editorRef.current = editor
                                         }}
                                         onBlur={field.onBlur}
-                                        onEditorChange={(content) => field.onChange(content)}
+                                        onEditorChange={(content: any) => field.onChange(content)}
                                         init={{
                                             height: 350,
                                             menubar: false,

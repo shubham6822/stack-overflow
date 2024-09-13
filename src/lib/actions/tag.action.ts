@@ -34,7 +34,7 @@ export async function getAllTags(params: GetAllTagsParams) {
         const { searchQuery, filter, page = 1, pageSize = 10 } = params;
         const skipAmount = (page - 1) * pageSize;
 
-        const query: FilterQuery<typeof Tag> = {};
+        const query: FilterQuery<any> = {};
 
         if (searchQuery) {
             const escapedSearchQuery = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
