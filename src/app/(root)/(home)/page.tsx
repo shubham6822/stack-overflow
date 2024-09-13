@@ -2,17 +2,45 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
-import LocalSearchbar from "@/components/shared/seach/LocalSearch";
+// import Pagination from "@/components/shared/Pagination";
 import { Button } from "@/components/ui/button";
-import { HomePageFilters } from "@/constant/filter";
-import { getQuestions } from "@/lib/actions/question.action";
+import { getQuestions, getRecommendedQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
+import type { Metadata } from 'next';
+import { auth } from "@clerk/nextjs/server";
+import { SearchParamsProps } from "@/app/types";
+import LocalSearchbar from "@/components/shared/seach/LocalSearch";
+import { HomePageFilters } from "@/constant/filter";
 
-export default async function page() {
-  const questions = await getQuestions();
+export const metadata: Metadata = {
+  title: 'Home | Dev Overflow',
+}
+
+export default async function Home({ searchParams }: SearchParamsProps) {
+  const { userId } = auth();
+
+  let result;
+
+  if (searchParams?.filter === 'recommended') {
+    if (userId) {
+      result = await getRecommendedQuestions({
+        userId,
+        searchQuery: searchParams.q,
+        page: searchParams.page ? +searchParams.page : 1,
+      });
+    } else {
+      result = {
+        questions: [],
+        isNext: false,
+      }
+    }
+  } else {
+    result = await getQuestions();
+  }
+
 
   return (
-    <div>
+    <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
@@ -38,10 +66,12 @@ export default async function page() {
           containerClasses="hidden max-md:flex"
         />
       </div>
+
       <HomeFilters />
+
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ?
-          questions.map((question) => (
+        {result.questions.length > 0 ?
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
@@ -61,6 +91,12 @@ export default async function page() {
             linkTitle="Ask a Question"
           />}
       </div>
-    </div>
+      {/* <div className="mt-10">
+        <Pagination 
+          pageNumber={searchParams?.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
+      </div> */}
+    </>
   )
 }

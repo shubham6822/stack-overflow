@@ -1,14 +1,22 @@
-import UserCard from "@/components/cards/UserCard";
-import Filter from "@/components/shared/Filter";
-import LocalSearchbar from "@/components/shared/seach/LocalSearch";
-import { UserFilters } from "@/constant/filter";
-import { getAllUsers } from "@/lib/actions/user.action";
-import { Link } from "lucide-react";
+import Filter from '@/components/shared/Filter'
+// import Pagination from '@/components/shared/Pagination'
+import { getAllUsers } from '@/lib/actions/user.action'
+import Link from 'next/link'
+import type { Metadata } from 'next';
+import dynamic from 'next/dynamic'
+import { SearchParamsProps } from '@/app/types';
+import LocalSearchbar from '@/components/shared/seach/LocalSearch';
+import { UserFilters } from '@/constant/filter';
 
-export default async function Community() {
-    const result = await getAllUsers();
+export const metadata: Metadata = {
+    title: 'Community | Dev Overflow',
+}
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+    const result = await getAllUsers()
+    const UserCard = dynamic(() => import('@/components/cards/UserCard'), { ssr: false })
     return (
-        <div>
+        <>
             <h1 className="h1-bold text-dark100_light900">All Users</h1>
 
             <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
@@ -24,11 +32,11 @@ export default async function Community() {
                     filters={UserFilters}
                     otherClasses="min-h-[56px] sm:min-w-[170px]"
                 />
-
             </div>
+
             <section className="mt-12 flex flex-wrap gap-4">
-                {result.length > 0 ? (
-                    result.map((user) => (
+                {result.users.length > 0 ? (
+                    result.users.map((user) => (
                         <UserCard key={user._id} user={user} />
                     ))
                 ) : (
@@ -40,6 +48,15 @@ export default async function Community() {
                     </div>
                 )}
             </section>
-        </div>
+
+            {/* <div className="mt-10">
+                <Pagination
+                    pageNumber={searchParams?.page ? +searchParams.page : 1}
+                    isNext={result.isNext}
+                />
+            </div> */}
+        </>
     )
 }
+
+export default Page
