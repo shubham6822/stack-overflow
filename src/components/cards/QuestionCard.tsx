@@ -3,6 +3,8 @@ import React from 'react'
 import { formatAndDivideNumber, getTimestamp } from '@/lib/utils';
 import RenderTag from '../shared/RenderTag';
 import Metric from '../shared/Metric';
+import { SignedIn } from '@clerk/nextjs';
+import EditDeleteAction from '../shared/EditDeleteAction';
 
 interface QuestionProps {
     _id: string;
@@ -25,7 +27,7 @@ interface QuestionProps {
 }
 
 const QuestionCard = ({
-    // clerkId,
+    clerkId,
     _id,
     title,
     tags,
@@ -35,7 +37,7 @@ const QuestionCard = ({
     answers,
     createdAt
 }: QuestionProps) => {
-    // const showActionButtons = clerkId && clerkId === author.clerkId;
+    const showActionButtons = clerkId && clerkId === author.clerkId;
 
     return (
         <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
@@ -50,12 +52,12 @@ const QuestionCard = ({
                         </h3>
                     </Link>
                 </div>
-                {/* 
+
                 <SignedIn>
                     {showActionButtons && (
                         <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
                     )}
-                </SignedIn> */}
+                </SignedIn>
             </div>
 
             <div className="mt-3.5 flex flex-wrap gap-2">
